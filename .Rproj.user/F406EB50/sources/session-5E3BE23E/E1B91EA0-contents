@@ -55,13 +55,8 @@ library(testthat)
 
 The original dataset which is about 20gb in size was downloaded from [here](https://drive.google.com/file/d/1l1ymMg-K_xLriFv1b8MgddH851d6n2sU/view) and it was filtered with sparklyr to get only records where country is Poland:
 
-```{r pressure, echo=FALSE}
-
-occurence <- spark_read_csv(sc, name = "occurence_table",  path = "~/Downloads/biodiversity-data/occurence.csv")
-
+occurence <- spark_read_csv(sc, name = "occurence_table",  path = "filepath"
 occurence_poland <- filter(occurence, country =="Poland")
-
-```
 
 
 ## Conclusion
