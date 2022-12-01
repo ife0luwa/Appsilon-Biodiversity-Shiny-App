@@ -1,0 +1,71 @@
+---
+title: "Biodiversity shiny app"
+author: "Ifeoluwa Babalola"
+date: "2022-12-01"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+This is the Biodiversity shiny app report. The original dataset is too large to be deployed on cloud so I used sparklyr (a package that provide an interface between R and Apache spark) to subset the data to only include the needed dataset (Biodiversity Poland records).
+
+
+## File structure
+
+The global.r file contains code to install the needed packages and all the data manipulation codes (including the functions). Whenever you run the shiny app, this file is loaded first, producing all the needed environmental variables. The ui.r and the server.r are self explanatory. Then the Test folder contains the unitTest.r file that contains the unit test for the major functions.
+
+## setting the environment I
+
+To use the sparklyr library, you need to have Java 8 installed on your machine and set the environment to the Java 8 path. Then you create a connection:
+
+```{r cars}
+install.packages("sparklyr")
+Sys.setenv(JAVA_HOME = "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home")
+
+library(sparklyr)
+spark_install(version = "3.2")
+spark_installed_versions()
+sc <- spark_connect(master = "local", version = "3.2")
+```
+
+## setting the environment II
+
+Then next, I installed the other necessary packages including testhat for unit testing:
+
+```{r pressure, echo=FALSE}
+library(readr)
+library(dplyr)
+library(tidyverse)
+library(shiny)
+library(shinythemes)
+library(leaflet)
+library(ggplot2)
+library(ggtext)
+library(testthat)
+
+```
+
+
+
+## getting the dataset
+
+The original dataset which is about 20gb in size was downloaded from [here](https://drive.google.com/file/d/1l1ymMg-K_xLriFv1b8MgddH851d6n2sU/view) and it was filtered with sparklyr to get only records where country is Poland:
+
+```{r pressure, echo=FALSE}
+
+occurence <- spark_read_csv(sc, name = "occurence_table",  path = "~/Downloads/biodiversity-data/occurence.csv")
+
+occurence_poland <- filter(occurence, country =="Poland")
+
+```
+
+
+## Conclusion
+
+I was not able to implement some extra features that were indicated in the project document, for example; a picture pop up on the map was not included because of lack of suitable picture. And also the welcome page of the app is blank (because I'm still looking for a way to make the app reactive without an event), so you will have to hit the render button to get your map and plot.
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
