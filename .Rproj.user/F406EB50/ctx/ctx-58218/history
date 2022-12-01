@@ -1,0 +1,15 @@
+shiny::runApp()
+occurence_poland_new <- select(occurence_poland, id, basisOfRecord, collectionCode, scientificName, taxonRank, kingdom, family,
+higherClassification, vernacularName, longitudeDecimal, latitudeDecimal, geodeticDatum, stateProvince,
+eventID, eventDate, eventTime, behavior, associatedTaxa)
+occurence <- spark_read_csv(sc, name = "occurence_table",  path = "~/Downloads/biodiversity-data/occurence.csv")
+install.packages("sparklyr")
+Sys.setenv(JAVA_HOME = "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home")
+library(sparklyr)
+spark_install(version = "3.2")
+spark_installed_versions()
+sc <- spark_connect(master = "local", version = "3.2")
+occurence <- spark_read_csv(sc, name = "occurence_table",  path = "~/Downloads/biodiversity-data/occurence.csv")
+library(dplyr)
+library(dplyr)
+install.packages("sparklyr")

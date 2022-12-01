@@ -1,0 +1,70 @@
+
+library(readr)
+
+
+occurence_poland <- read_csv("occurence_poland.csv")
+
+
+  #write a function to return a list that matches a vernacular name search query
+
+  
+search.vernacular <- function(df, searchQuery) {
+  filter(df, grepl(searchQuery, df$vernacularName))
+}
+
+  
+  print(search.vernacular(occurence_poland, "Hooded Crow"))
+
+  
+  
+  search.scientific <- function(df, searchQuery) {
+    filter(df, grepl(searchQuery, df$scientificName))
+  }
+
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+ library(leaflet)
+
+ observationMap <- leaflet(specieData) %>%
+   addTiles() %>%
+   addMarkers(lng= ~longitudeDecimal, lat=~latitudeDecimal, popup=~basisOfRecord) 
+ 
+ print(observationMap)
+ 
+ 
+ # plot time series line graph for observation
+ 
+ #data_new$dates <- as.Date(data_new$dates)
+ #ggplot(data_new, aes(x = dates, y = values)) +            # Draw ggplot2 plot
+ #geom_line() + 
+   #scale_x_date(date_labels = "%Y-%m")
+
+ specieData <- search.vernacular(occurence_poland, "Hooded crow")
+ 
+ specieData$eventDate <- as.Date(specieData$eventDate)
+ 
+ 
+ time_plot <- ggplot(specieData, aes(x = eventDate, y=individualCount)) +
+   geom_point( color="#69b3a2") +
+   scale_x_date(date_labels = "%Y-%m")
+ 
+ 
+ 
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+  
+  

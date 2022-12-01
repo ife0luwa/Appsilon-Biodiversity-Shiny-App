@@ -1,0 +1,63 @@
+shiny::runApp()
+occurence_poland <- read.csv("~/Desktop/appsilon")
+occurence_poland <- read.csv("~/Desktop/appsilon/occurence_poland.csv")
+View(occurence_poland)
+print(occurence_poland)
+help("read.csv")
+occurence_poland <- read.csv("occurence_poland.csv", header = TRUE, sep = ",")
+print(occurence_poland)
+colnames(occurence_poland)
+head(occurence_poland)
+View(occurence_poland)
+class(occurence_poland)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))  %>%
+distinct(scientificName)
+return (list(searchData))
+}
+searchQuery <- "Buteo lagopus"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+searchRes <- search.scientific(occurence_poland, searchQuery)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))
+distinct(scientificName)
+return (list(searchData))
+}
+searchQuery <- "Buteo lagopus"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+library(dplyr)
+library(tidyverse)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))  %>%
+distinct(scientificName)
+return (list(searchData))
+}
+searchRes <- search.scientific(occurence_poland, searchQuery)
+print(searchRes)
+getSpecie.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))
+return (searchData)
+}
+specieData <- getSpecie.scientific(occurence_poland,  "Buteo lagopus")
+print(specieData)
+library(leaflet)
+install.packages("leaflet")
+install.packages("leaflet")
+library(leaflet)
+observationMap <- leaflet(specieData) %>%
+addTiles() %>%
+addMarkers(lng= ~longitudeDecimal, lat=~latitudeDecimal, popup=~basisOfRecord)
+print(observationMap)
+install.packages("sparklyr")
+library(sparklyr)
+occurence_poland <- spark_read_csv(sc, name = "occurence_poland",  path = "occurence_poland.csv")
+Sys.setenv(JAVA_HOME = "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home")
+sc <- spark_connect(master = "local", version = "3.2")
+occurence_poland <- spark_read_csv(sc, name = "occurence_poland",  path = "occurence_poland.csv")
+dframe <- copy_to(sc, occurence_poland)
+occurence_poland <- occurence_poland %>% collect()
+print(occurence_poland)
+shiny::runApp()
+runApp()
+load("~/Desktop/appsilon/Appsilon.RData")
+shiny::runApp()

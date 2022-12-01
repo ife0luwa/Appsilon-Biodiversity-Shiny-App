@@ -1,0 +1,498 @@
+install.packages("sparklyr")
+Sys.setenv(JAVA_HOME = "/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home")
+library(sparklyr)
+sc <- spark_connect(master = "local", version = "3.2")
+occurence <- spark_read_csv(sc, name = "occurence_table",  path = "~/Downloads/biodiversity-data/occurence.csv")
+occurence_poland <- filter(occurence, country =="Poland")
+view(occurence_poland)
+library(dplyr)
+view(occurence_poland)
+head(occurence_poland)
+count(occurence_poland)
+occurence_poland.write.csv("~/Desktop/appsilon")
+spark_write_csv(
+occurence_poland,
+"~/Desktop/appsilon",
+header = TRUE,
+delimiter = ",",)
+occurence_poland.write.csv("~/Desktop/biodiversity_poland")
+spark_write_csv(
+occurence_poland,
+"~/Desktop/appsilon",
+header = TRUE,
+delimiter = ",",)
+spark_write_csv(
+occurence_poland,
+"~/Desktop/biodiversity_poland",
+header = TRUE,
+delimiter = ",",)
+spark_write_csv(
+occurence_poland,
+"~/Desktop/appsilon/biodiversity_poland.csv",
+header = TRUE,
+delimiter = ",",)
+coalesce(occurence_poland, 1)
+sdf_coalesce(occurence_poland, 1)
+spark_write_csv(
+occurence_poland,
+"~/Desktop/appsilon/biodiversity_poland.csv",
+header = TRUE,)
+occurence_poland.coalesce(1).write.csv("biodiversity_poland")
+occurence_poland.sdf_coalesce(1).write.csv("biodiversity_poland")
+occurence_poland
+.sdf_coalesce(1)
+occurence_poland.coalesce(1)
+occurence_poland
+.coalesce(1)
+sdf_coalesce(occurence_poland, 1)
+spark_write_csv(
+occurence_poland,
+"~/Desktop/appsilon/biodiversity_poland.csv",
+header = TRUE,)
+searchQuery <- "Elk"
+searchResult <- function(occurence_poland, searchQuery) {
+searchData <- occurence_poland[grep("osa", occurence_poland$scietific_name), ]
+return (searchData)
+}
+head(searchResult)
+colnames(occurence_poland)
+searchQuery <- "Elk"
+searchResult <- function(occurence_poland, searchQuery) {
+searchData <- occurence_poland[grep(searchQuery, occurence_poland$vernacularName), ]
+return (searchData)
+}
+head(searchResult)
+searchData <- occurence_poland[grep(searchQuery, occurence_poland$vernacularName), ]
+library("data.table")
+result1<-occurence_poland[occurence_poland$scietific_name %like% "Elk", ]
+result1<-occurence_poland[occurence_poland$scietific_name %like% "Elk" ]
+head(result1)
+last_error()
+rlang::last_error()
+tibble(result1)
+result2 <- result1 %>% collect()
+src_tbls(sc)
+dframe <- copy_to(sc, occurence_poland)
+src_tbls(sc)
+result1<-occurence_poland[occurence_poland$scietific_name %like% "Elk" ]
+head(result1)
+head(occurence_poland)
+occurence_poland %>% filter(grepl('Elk', vernacularName))
+searchResult <- occurence_poland %>% filter(grepl('Elk', vernacularName))
+head(searchResult)
+count(searchResult)
+searchResult <- occurence_poland %>% filter(grepl('El', vernacularName))
+head(searchResult)
+searchQuery <- "Elk"
+searchResult <- function(occurence_poland, searchQuery) {
+searchData <- occurence_poland %>% filter(grepl('El', vernacularName))
+return (searchData)
+}
+head(searchResult)
+searchQuery <- "Elk"
+print(searchQuery)
+searchData <- occurence_poland %>% filter(grepl(searchQuery, vernacularName))
+print(searchData)
+searchQuery <- "Elk"
+search.vernacular <- function(occurence_poland, searchQuery) {
+searchData <- occurence_poland %>% filter(grepl('El', vernacularName))
+return (searchData)
+}
+searchRes <- search.vernacular(searchQuery)
+searchRes <- search.vernacular(searchQuery)
+searchRes <- search.vernacular(as.character(searchQuery))
+search.vernacular <- function(occurence_poland, searchQuery) {
+searchData <- occurence_poland %>% filter(grepl(searchQuery, vernacularName))
+return (searchData)
+}
+searchRes <- search.vernacular(searchQuery)
+search.vernacular <- function(occurence_poland, searchQuery) {
+searchData <- occurence_poland %>% filter(grepl(searchQuery, vernacularName))
+return (searchData)
+}
+searchQuery <- "Elk"
+searchRes <- search.vernacular(searchQuery)
+searchRes <- search.vernacular(occurence_poland, searchQuery)
+head(searchRes)
+search.vernacular <- function(df, searchQuery) {
+searchData <- occurence_poland %>% filter(grepl(searchQuery, vernacularName))
+return (searchData)
+}
+searchQuery <- "Elk"
+searchRes <- search.vernacular(occurence_poland, searchQuery)
+head(searchRes)
+search.vernacular <- function(df, searchQuery) {
+searchData <- occurence_poland %>% filter(grepl(searchQuery, vernacularName))
+return (searchData)
+}
+searchQuery <- "alces"
+searchRes <- search.vernacular(occurence_poland, searchQuery)
+head(searchRes)
+tibble(searchRes)
+print(searchRes)
+colnames(occurence_poland)
+search.scientific <- function(df, searchQuery) {
+searchData <- occurence_poland %>% filter(grepl(searchQuery, scientificName))
+return (searchData)
+}
+searchQuery <- "alces"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+print(searchRes)
+print(occurence_poland)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))
+return (searchData)
+}
+searchQuery <- "alces"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+print(searchRes)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))
+return (searchData)
+}
+searchQuery <- "a"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+head(searchRes)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))
+return (searchData)
+}
+searchQuery <- "a g"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+head(searchRes)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))
+return (searchData)
+}
+searchQuery <- "ag"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+head(searchRes)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName)) %<%
+distinct(scientificName)
+return (list(searchData))
+}
+searchQuery <- "ag"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))
+df <-  searchData %<% distinct(scientificName)
+return (list(df))
+}
+searchQuery <- "ag"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))
+df <-  searchData %>% distinct(scientificName)
+return (list(df))
+}
+searchQuery <- "ag"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+print(searchRes)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))  %>%
+distinct(scientificName)
+return (list(searchData))
+}
+searchQuery <- "ag"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+print(searchRes)
+search.vernacular <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, vernacularName))%>%
+distinct(scientificName)
+return (list(searchData))
+}
+searchQuery <- "Elk"
+searchRes <- search.vernacular(occurence_poland, searchQuery)
+print(searchRes)
+search.vernacular <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, vernacularName))%>%
+distinct(vernacularName)
+return (list(searchData))
+}
+searchQuery <- "Elk"
+searchRes <- search.vernacular(occurence_poland, searchQuery)
+print(searchRes)
+install.packages("leaflet")
+library(leaflet)
+observationMap <- leaflet() %>%
+addTiles()
+print(observationMap)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))  %>%
+distinct(scientificName)
+return (list(searchData))
+}
+searchQuery <- "ag"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+print(searchRes)
+specieData <- getSpecie.scientific(occurence_poland,  "Buteo lagopus")
+getSpecie.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))
+return (searchData)
+}
+specieData <- getSpecie.scientific(occurence_poland,  "Buteo lagopus")
+print(specieData)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addCircles(specieData$longitudeDecimal, specieData$latitudeDecimal, popup=specieData$taxonRank, weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+specieData <- specieData[!is.na(specieData$longitudeDecimal) & !is.na(specieData$latitudeDecimal), ]
+specieData <- specieData[!is.na(specieData$longitudeDecimal) & !is.na(specieData$latitudeDecimal) ]
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addCircles(specieData$longitudeDecimal, specieData$latitudeDecimal, popup=specieData$taxonRank, weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addCircles(lng=specieData$longitudeDecimal, lat=specieData$latitudeDecimal, popup=specieData$taxonRank, weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+print(specieData)
+specieData <- getSpecie.scientific(occurence_poland,  "Buteo lagopus")
+print(specieData)
+count(specieData)
+print.data.frame(specieData)
+specieData[,"longitudeDecimal", "latitudeDecimal", drop=FALSE]
+specieData["longitudeDecimal", "latitudeDecimal", drop=FALSE]
+specieData["longitudeDecimal", "latitudeDecimal", drop=FALSE]
+specieData %>% select(longitudeDecimal, latitudeDecimal)
+specieData <- getSpecie.scientific(occurence_poland,  "Buteo lagopus")
+print(specieData)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addCircles(lng=specieData$longitudeDecimal, lat=specieData$latitudeDecimal, popup=specieData$taxonRank, weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+colnames(specieData)
+specieData <- getSpecie.scientific(occurence_poland,  "Buteo lagopus")
+print(specieData)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addCircles(~longitudeDecimal, ~specieData$latitudeDecimal, popup=specieData$taxonRank, weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addMarkers(~longitudeDecimal, ~specieData$latitudeDecimal, popup=specieData$taxonRank)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addMarkers(~longitudeDecimal, ~latitudeDecimal, popup=specieData$taxonRank)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addMarkers(~longitudeDecimal, ~latitudeDecimal, popup=specieData$taxonRank)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addMarkers(lon= specieData$longitudeDecimal, lat=specieData$latitudeDecimal, popup=specieData$taxonRank)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addCircles(lon= specieData$longitudeDecimal, lat=specieData$latitudeDecimal, popup=specieData$taxonRank,
+weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addCircles(~specieData$longitudeDecimal, ~specieData$latitudeDecimal, popup=specieData$taxonRank,
+weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+names(providers)[1:5]
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addCircles(lng= specieData$longitudeDecimal, lat=specieData$latitudeDecimal, popup=specieData$taxonRank,
+weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+observationMap <- leaflet(specieData) %>%
+addTiles() %>%
+addMarkers(lng = specieData$longitudeDecimal, lat=specieData$latitudeDecimal)
+colnames(specieData)
+head(specieData)
+copy_to(sc, specieData)
+observationMap <- leaflet(specieData) %>%
+addTiles() %>%
+addMarkers(lng = specieData$longitudeDecimal, lat=specieData$latitudeDecimal)
+observationMap <- leaflet(specieData) %>%
+addTiles() %>%
+addMarkers(lng =~longitudeDecimal, lat=~latitudeDecimal)
+observationMap <- leaflet(specieData) %>%
+addTiles() %>%
+addMarkers(lng =22.6, lat=53.5)
+print(observationMap)
+specieData <- specieData %>% collect()
+observationMap <- leaflet(specieData) %>%
+addTiles() %>%
+addMarkers(lng =~longitudeDecimal, lat=~latitudeDecimal)
+print(observationMap)
+specieData <- specieData %>% collect()
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addCircles(lng= specieData$longitudeDecimal, lat=specieData$latitudeDecimal, popup=specieData$taxonRank,
+weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+print(observationMap)
+observationMap <- leaflet(specieData) %>% addProviderTiles(providers$CartoDB.DarkMatter) %>%
+setView(-71.931180, 42.385453, zoom = 7) %>%
+addCircles(lng= ~longitudeDecimal, lat=~latitudeDecimal, popup=~taxonRank,
+weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+print(observationMap)
+specieData <- specieData %>% collect()
+observationMap <- leaflet(specieData) %>%
+addTiles() %>%
+addCircles(lng= ~longitudeDecimal, lat=~latitudeDecimal, popup=~taxonRank,
+weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+print(observationMap)
+View(specieData)
+colnames(specieData)
+observationMap <- leaflet(specieData) %>%
+addTiles() %>%
+addCircles(lng= ~longitudeDecimal, lat=~latitudeDecimal, popup=~basisOfRecord,
+weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+print(observationMap)
+observationMap <- leaflet(specieData) %>%
+addTiles() %>%
+addMarkers(lng= ~longitudeDecimal, lat=~latitudeDecimal, popup=~basisOfRecord,
+weight = 3, radius=40,
+color="#ffa500", stroke = TRUE, fillOpacity = 0.8)
+observationMap <- leaflet(specieData) %>%
+addTiles() %>%
+addMarkers(lng= ~longitudeDecimal, lat=~latitudeDecimal, popup=~basisOfRecord)
+print(observationMap)
+search.vernacular <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, vernacularName))%>%
+distinct(vernacularName)
+if(lenght(list(searchData)) == 0) {
+return(paste("no record matches", searchQuery))
+}
+return (list(searchData))
+}
+searchQuery <- " Buteo lagopus"
+searchRes <- search.vernacular(occurence_poland, searchQuery)
+search.vernacular <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, vernacularName))%>%
+distinct(vernacularName)
+if(length(list(searchData)) == 0) {
+return(paste("no record matches", searchQuery))
+}
+return (list(searchData))
+}
+searchQuery <- " Buteo lagopus"
+searchRes <- search.vernacular(occurence_poland, searchQuery)
+print(searchRes)
+colnames(searchRes)
+search.vernacular <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, vernacularName))%>%
+distinct(vernacularName)
+print(length(searchData))
+if(length(list(searchData)) == 0) {
+return(paste("no record matches", searchQuery))
+}
+return (list(searchData))
+}
+searchQuery <- " Buteo lagopus"
+searchRes <- search.vernacular(occurence_poland, searchQuery)
+print(searchRes)
+search.vernacular <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, vernacularName))%>%
+distinct(vernacularName)
+if(length(list(searchData)) == 0) {
+return(paste("no record matches", searchQuery))
+}
+return (list(searchData))
+}
+searchQuery <- " Buteo lagopus"
+searchRes <- search.vernacular(occurence_poland, searchQuery)
+print(length(searchData))
+print(searchRes)
+searchData <- df %>% filter(grepl(searchQuery, scientificName))  %>%
+distinct(scientificName)
+search.scientific <- function(df, searchQuery) {
+searchData <- df %>% filter(grepl(searchQuery, scientificName))  %>%
+distinct(scientificName)
+return (list(searchData))
+}
+searchQuery <- "Buteo lagopus"
+searchRes <- search.scientific(occurence_poland, searchQuery)
+print(length(searchData))
+print(searchRes)
+searchData <- occurence_poland %>% filter(grepl("Buteo lagopus", scientificName))%>%
+distinct(vernacularName)
+print(length(searchData))
+searchData <- occurence_poland %>% filter(grepl("Buteo lagopus", scientificName))%>%
+distinct(vernacularName)
+print(searchData)
+print(length(searchData))
+searchData <- occurence_poland %>% filter(grepl("Buteo lagopus", scientificName))%>%
+distinct(scientificName)
+print(searchData)
+print(length(searchData))
+searchData <- occurence_poland %>% filter(grepl("Buteo lagopus", scientificName))%>%
+distinct(scientificName)
+print(searchData)
+print(lengths(searchData))
+searchData <- occurence_poland %>% filter(grepl("B", scientificName))%>%
+distinct(scientificName)
+print(searchData)
+print(length(searchData))
+colnames(occurence_poland)
+specieData %>% select(eventDate, eventTime)
+occurence_poland %>% select(eventDate, eventTime)
+print(n=2000, occurence_poland)
+View(occurence_poland)
+occurence_poland <- occurence_poland %>% collect()
+View(occurence_poland)
+install.packages("ggplot2")
+specieData$eventDate <- as.Date(specieData$eventDate)
+ggplot2(specieData, aes(x = eventDate, y=individualCount)) +
+geom_line() +
+scale_x_date(date_labels = "%Y-%m")
+library(ggplot2)
+specieData$eventDate <- as.Date(specieData$eventDate)
+ggplot2(specieData, aes(x = eventDate, y=individualCount)) +
+geom_line() +
+scale_x_date(date_labels = "%Y-%m")
+specieData$eventDate <- as.Date(specieData$eventDate)
+ggplot(specieData, aes(x = eventDate, y=individualCount)) +
+geom_line() +
+scale_x_date(date_labels = "%Y-%m")
+specieData$eventDate <- as.Date(specieData$eventDate)
+line_chart <- ggplot(specieData, aes(x = eventDate, y=individualCount)) +
+geom_line() +
+scale_x_date(date_labels = "%Y-%m")
+print(line_chart)
+specieData$eventDate <- as.Date(specieData$eventDate)
+line_chart <- ggplot(specieData, aes(x = eventDate, y=individualCount)) +
+geom_point( color="#69b3a2") +
+scale_x_date(date_labels = "%Y-%m")
+print(line_chart)
+plot(specieData$eventDate, main = "eventDate", sub = "Species observation timeline", type = "h")
+plot(specieData$eventDate, main = "eventDate", sub = "Species observation timeline", type = "v")
+help(plot)
+help(plot)
+plot(specieData$eventDate, main = "eventDate", sub = "Species observation timeline", type = "v")
+plot(specieData$eventDate, main = "eventDate", sub = "Species observation timeline", type = "h")
+plot(, specieData$eventDate, main = "eventDate", sub = "Species observation timeline", type = "h")
+plot(specieData$individualCount, specieData$eventDate, main = "eventDate", sub = "Species observation timeline", type = "h")
+plot(specieData$eventDate, specieData$individualCount, main = "eventDate", sub = "Species observation timeline", type = "h")
+line_chart <- ggplot(specieData, aes(x = eventDate, y=individualCount)) +
+geom_point( color="#69b3a2") +
+scale_x_date(date_labels = "%Y-%m")
+print(line_chart)
+line_chart <- ggplot(specieData, aes(x = eventDate, y=0)) +
+geom_point( color="#69b3a2") +
+scale_x_date(date_labels = "%Y-%m")
+print(line_chart)
+line_chart <- ggplot(specieData, aes(x = eventDate, y=individualCount)) +
+geom_point( color="#69b3a2") +
+scale_x_date(date_labels = "%Y-%m")
+print(line_chart)
+shiny::runApp()
+runApp()
+runApp()
+runApp()
+setwd("~/Desktop/appsilon")
+runApp()
+getwd()
+runApp()
+runApp()
+runApp()
+runApp()
+saveRDS(occurence_poland, "./occurence_poland.rds")
+runApp()

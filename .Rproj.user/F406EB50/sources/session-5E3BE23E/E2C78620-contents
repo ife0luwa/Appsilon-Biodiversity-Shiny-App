@@ -1,0 +1,26 @@
+
+occurence_poland <- read_csv("occurence_poland.csv")
+
+
+search.vernacular <- function(df, searchQuery) {
+  filter(df, grepl(searchQuery, df$vernacularName))
+}
+
+
+testData <- search.vernacular(occurence_poland, "Hooded Crow")
+
+
+testData$eventDate <- as.Date(testData$eventDate)
+
+
+time_plot <- ggplot(testData, aes(x = eventDate, y=individualCount)) +
+  geom_line( color="#69b3a2") +
+  xlab("Date") +
+  ylab("bservation count") +
+  ggtitle("<span style = 'color: blue;'>Triennial specie observation chart</span>") +
+  theme(plot.title = element_markdown()) +
+  theme(text = element_text(family = "Comic Sans MS", size = 11)) +
+  scale_x_date(date_labels = "%b %Y", breaks= seq(as.Date("1995-07-05"), max(testData$eventDate), by = "3 year"))
+
+#68
+print(time_plot)

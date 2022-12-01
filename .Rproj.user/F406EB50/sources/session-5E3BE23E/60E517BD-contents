@@ -1,0 +1,54 @@
+
+
+library(shiny)
+library(shinythemes)
+
+
+
+ui <- fluidPage(theme = shinytheme("cerulean"),
+                navbarPage(
+                  "Biodiversity app",
+                  
+                  tabPanel("Species by Location",
+                           
+                           sidebarPanel(
+                             tags$h3("Input:"),
+                             textInput("txt1", "search species by vernacular:", ""),
+                             textInput("txt2", "search species by scientific name:", ""),
+                             
+                             #selectizeInput(
+                              # inputId = "vernacular",
+                               #label = "search by vernacular",
+                               #multiple = FALSE
+                               
+                             #)
+                             
+                           ), # sidebarPanel
+                           
+                           mainPanel(
+                             #render the viz
+                             
+                           ) # mainPanel
+                  )
+                  
+                )
+                
+)
+
+
+
+
+
+server <- function(input, output, session) {
+  output$txtout <- renderText({
+    paste( input$txt1, input$txt2, sep = " " )
+  })
+}
+
+
+
+
+
+
+shinyApp(ui, server)
+
